@@ -1,50 +1,49 @@
-let canais = [];
-
 document.getElementById("canal-form").addEventListener("submit", function (e) {
   e.preventDefault();
-
-  const nome = document.getElementById("nome").value.trim();
-  const url = document.getElementById("url").value.trim();
-
-  if (!nome || !url) return;
-
-  canais.push({ nome, url });
-  atualizarTabela();
-  document.getElementById("canal-form").reset();
+  const nome = document.getElementById("nome").value;
+  const url = document.getElementById("url").value;
+  const lista = document.getElementById("canal-lista");
+  const linha = document.createElement("tr");
+  linha.innerHTML = `<td>${nome}</td><td>${url}</td><td><button onclick="this.closest('tr').remove()">Remover</button></td>`;
+  lista.appendChild(linha);
+  document.getElementById("total-canais").textContent = lista.children.length;
+  this.reset();
 });
 
-function atualizarTabela() {
-  const tbody = document.getElementById("canal-lista");
-  tbody.innerHTML = "";
+document.getElementById("login-form").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-  canais.forEach((canal, index) => {
-    const row = document.createElement("tr");
+  const nome = document.getElementById("nome-cliente").value.trim();
+  const host = document.getElementById("host-cliente").value.trim();
+  if (!nome || !host) return;
 
-    row.innerHTML = `
-      <td>${canal.nome}</td>
-      <td><a href="${canal.url}" target="_blank">${canal.url}</a></td>
-      <td>
-        <button class="edit" onclick="editarCanal(${index})">Editar</button>
-        <button class="delete" onclick="removerCanal(${index})">Excluir</button>
-      </td>
-    `;
+  const user = gerarUsuario(nome);
+  const senha = gerarSenha();
+  const m3uLink = `${host}/get.php?username=${user}&password=${senha}&type=m3u_plus`;
 
-    tbody.appendChild(row);
+  const resultado = 
+    `🔐 Aqui está seu acesso IPTV:\n\n` +
+    `Host: ${host}\n` +
+    `User: ${user}\n` +
+    `Senha: ${senha}\n\n` +
+    `🔗 Link M3U+: \n${m3uLink}`;
+
+  document.getElementById("dados-acesso").textContent = resultado;
+  document.getElementById("resultado-login").style.display = "block";
+});
+
+function gerarUsuario(nome) {
+  const base = nome.toLowerCase().replace(/\s/g, "").slice(0, 8);
+  return base + Math.floor(100 + Math.random() * 900);
+}
+
+function gerarSenha() {
+  return Math.random().toString(36).slice(-8);
+}
+
+function copiarAcesso() {
+  const texto = document.getElementById("dados-acesso").textContent;
+  navigator.clipboard.writeText(texto).then(() => {
+    alert("Acesso copiado com sucesso!");
   });
-
-  document.getElementById("total-canais").textContent = canais.length;
 }
-
-function removerCanal(index) {
-  canais.splice(index, 1);
-  atualizarTabela();
-}
-
-function editarCanal(index) {
-  const canal = canais[index];
-  document.getElementById("nome").value = canal.nome;
-  document.getElementById("url").value = canal.url;
-  canais.splice(index, 1); // Remove o antigo para poder salvar novo
-  atualizarTabela();
-}
-
