@@ -43,9 +43,23 @@
           </tr>
         </thead>
         <tbody id="canal-lista">
-          <!-- Canais adicionados aqui -->
         </tbody>
       </table>
+    </section>
+
+    <section class="login-section">
+      <h2>Gerar Acesso IPTV</h2>
+      <form id="login-form">
+        <input type="text" id="nome-cliente" placeholder="Nome do cliente" required />
+        <input type="text" id="host-cliente" placeholder="Ex: http://qfq23d.cc" required />
+        <button type="submit">Gerar Acesso</button>
+      </form>
+
+      <div id="resultado-login" class="resultado" style="display: none;">
+        <h3>🔐 Aqui está o acesso:</h3>
+        <pre id="dados-acesso"></pre>
+        <button onclick="copiarAcesso()">📋 Copiar</button>
+      </div>
     </section>
   </main>
 
