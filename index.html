@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel IPTV - ADM</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>Painel IPTV</h1>
+  </header>
+
+  <main>
+    <section class="stats">
+      <div class="card">
+        <h3>Total de Canais</h3>
+        <p id="total-canais">0</p>
+      </div>
+      <div class="card">
+        <h3>Usuários Ativos</h3>
+        <p>254</p>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <h2>Adicionar Canal</h2>
+      <form id="canal-form">
+        <input type="text" id="nome" placeholder="Nome do canal" required />
+        <input type="text" id="url" placeholder="URL do stream" required />
+        <button type="submit">Adicionar</button>
+      </form>
+    </section>
+
+    <section class="list-section">
+      <h2>Lista de Canais</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>URL</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="canal-lista">
+          <!-- Canais adicionados aqui -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 IPTV Painel. Feito por Bot.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
